@@ -253,7 +253,7 @@ export function useDatabase() {
   // باقي الدوال تبقى كما هي...
   const getContracts = useCallback(async () => {
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 500));
     setLoading(false)
     return mockContracts
   }, [])
