@@ -274,7 +274,7 @@ export function useDatabase() {
 
   const getDashboardStats = useCallback(async () => {
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    setLoading(false)
+await new Promise((resolve) => setTimeout(resolve, 500));
+setLoading(false);
     return {
       totalCon
