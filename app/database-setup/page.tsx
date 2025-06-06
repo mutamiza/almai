@@ -191,7 +191,7 @@ export default function DatabaseSetupPage() {
         console.error("فشل استرجاع الإعدادات المحفوظة:", error)
       }
     }
-  }, [])
+}, []);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
