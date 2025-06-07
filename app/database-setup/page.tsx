@@ -193,10 +193,13 @@ useEffect(() => {
   }
 }, []);
 
-return (
- <div className={"min-h-screen bg-gray-50 p-4"}>
-    ...
-  </div>
+export default function DatabaseSetupPage() {
+  return (
+    <div className="min-h-screen bg-gray-50 p-4">
+      {/* باقي الكود */}
+    </div>
+  );
+}
       <div className="container mx-auto max-w-6xl space-y-6">
         {/* Header */}
         <div className="text-center py-6">
