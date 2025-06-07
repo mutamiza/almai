@@ -272,9 +272,12 @@ export function useDatabase() {
     return mockPayments
   }, [])
 
-  const getDashboardStats = useCallback(async () => {
-    setLoading(true)
-await new Promise((resolve) => setTimeout(resolve, 500));
-setLoading(false);
-    return {
-      totalCon
+ const getDashboardStats = useCallback(async () => {
+  setLoading(true);
+  await new Promise((resolve) => setTimeout(resolve, 500));
+  setLoading(false);
+
+  return {
+    totalContracts: 0, // استبدل 0 بالقيمة الصحيحة من قاعدة البيانات لاحقًا
+  };
+}, []);
