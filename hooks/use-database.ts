@@ -271,13 +271,12 @@ export function useDatabase() {
     setLoading(false)
     return mockPayments
   }, [])
-
- const getDashboardStats = useCallback(async () => {
+const getDashboardStats = useCallback(async () => {
   setLoading(true);
   await new Promise((resolve) => setTimeout(resolve, 500));
   setLoading(false);
 
   return {
-    totalContracts: 0, // ← لاحقًا تُستبدل بالبيانات الفعلية
+    totalContracts: 0, // لاحقًا تُستبدل بالبيانات الفعلية
   };
 }, []);
