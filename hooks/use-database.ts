@@ -58,19 +58,14 @@ export function useDatabase() {
   const [error, setError] = useState(null)
   const [dbConfig, setDbConfig] = useState(null)
 
-  // استرجاع معلومات الاتصال المحفوظة عند تحميل الصفحة
   useEffect(() => {
     const fetchConfig = async () => {
       try {
         const config = await getDatabaseConfig()
         setDbConfig(config)
-        
-        // اختبار الاتصال بقاعدة البيانات
         const response = await fetch('/api/database/test', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             host: config.host,
             port: config.port,
@@ -79,14 +74,9 @@ export function useDatabase() {
             database: config.name
           })
         })
-        
         if (response.ok) {
           const result = await response.json()
-          if (result.success) {
-            setSystemMode("production")
-          } else {
-            setSystemMode("simulation")
-          }
+          setSystemMode(result.success ? "production" : "simulation")
         } else {
           setSystemMode("simulation")
         }
@@ -95,38 +85,28 @@ export function useDatabase() {
         setSystemMode("simulation")
       }
     }
-    
     fetchConfig()
   }, [])
 
-  const getSystemStatus = () => {
-    return {
-      mode: systemMode,
-      configured: isConfigured,
-      message: systemMode === "production" 
-        ? "النظام يعمل في وضع الإنتاج مع قاعدة بيانات حقيقية" 
-        : "النظام يعمل في وضع المحاكاة الآمن",
-      isSafe: true,
-      cost: systemMode === "production" ? "حسب استضافة قاعدة البيانات" : "مجاني",
-    }
-  }
+  const getSystemStatus = () => ({
+    mode: systemMode,
+    configured: isConfigured,
+    message: systemMode === "production" 
+      ? "النظام يعمل في وضع الإنتاج مع قاعدة بيانات حقيقية" 
+      : "النظام يعمل في وضع المحاكاة الآمن",
+    isSafe: true,
+    cost: systemMode === "production" ? "حسب استضافة قاعدة البيانات" : "مجاني"
+  })
 
   const testConnection = async () => {
     if (!dbConfig) {
-      return {
-        success: false,
-        message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات",
-      }
+      return { success: false, message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات" }
     }
-    
     try {
       setLoading(true)
-      
       const response = await fetch('/api/database/test', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           host: dbConfig.host,
           port: dbConfig.port,
@@ -135,46 +115,26 @@ export function useDatabase() {
           database: dbConfig.name
         })
       })
-      
-      if (!response.ok) {
-        throw new Error(`فشل اختبار الاتصال: ${response.status}`)
-      }
-      
+      if (!response.ok) throw new Error(`فشل اختبار الاتصال: ${response.status}`)
       const result = await response.json()
-      
-      if (result.success) {
-        setSystemMode("production")
-      }
-      
+      if (result.success) setSystemMode("production")
       return result
     } catch (error: any) {
       console.error("خطأ في اختبار الاتصال:", error)
       setSystemMode("simulation")
-      return {
-        success: false,
-        message: `خطأ في الاختبار: ${error.message}`,
-      }
+      return { success: false, message: `خطأ في الاختبار: ${error.message}` }
     } finally {
       setLoading(false)
     }
   }
 
   const initializeTables = async () => {
-    if (!dbConfig) {
-      return {
-        success: false,
-        message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات",
-      }
-    }
-    
+    if (!dbConfig) return { success: false, message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات" }
     try {
       setLoading(true)
-      
       const response = await fetch('/api/database/init', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           host: dbConfig.host,
           port: dbConfig.port,
@@ -183,40 +143,23 @@ export function useDatabase() {
           database: dbConfig.name
         })
       })
-      
-      if (!response.ok) {
-        throw new Error(`فشل إنشاء الجداول: ${response.status}`)
-      }
-      
-      const result = await response.json()
-      return result
+      if (!response.ok) throw new Error(`فشل إنشاء الجداول: ${response.status}`)
+      return await response.json()
     } catch (error: any) {
       console.error("خطأ في إنشاء الجداول:", error)
-      return {
-        success: false,
-        message: `خطأ في إنشاء الجداول: ${error.message}`,
-      }
+      return { success: false, message: `خطأ في إنشاء الجداول: ${error.message}` }
     } finally {
       setLoading(false)
     }
   }
 
   const addSampleData = async () => {
-    if (!dbConfig) {
-      return {
-        success: false,
-        message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات",
-      }
-    }
-    
+    if (!dbConfig) return { success: false, message: "لم يتم تكوين معلومات الاتصال بقاعدة البيانات" }
     try {
       setLoading(true)
-      
       const response = await fetch('/api/database/seed', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           host: dbConfig.host,
           port: dbConfig.port,
@@ -225,35 +168,23 @@ export function useDatabase() {
           database: dbConfig.name
         })
       })
-      
-      if (!response.ok) {
-        throw new Error(`فشل إضافة البيانات التجريبية: ${response.status}`)
-      }
-      
-      const result = await response.json()
-      return result
+      if (!response.ok) throw new Error(`فشل إضافة البيانات التجريبية: ${response.status}`)
+      return await response.json()
     } catch (error: any) {
       console.error("خطأ في إضافة البيانات التجريبية:", error)
-      return {
-        success: false,
-        message: `خطأ في إضافة البيانات التجريبية: ${error.message}`,
-      }
+      return { success: false, message: `خطأ في إضافة البيانات التجريبية: ${error.message}` }
     } finally {
       setLoading(false)
     }
   }
 
   const fetchAllData = async () => {
-    return {
-      success: true,
-      message: "تم جلب البيانات",
-    }
+    return { success: true, message: "تم جلب البيانات" }
   }
 
-  // باقي الدوال تبقى كما هي...
   const getContracts = useCallback(async () => {
     setLoading(true)
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500))
     setLoading(false)
     return mockContracts
   }, [])
@@ -271,12 +202,26 @@ export function useDatabase() {
     setLoading(false)
     return mockPayments
   }, [])
-const getDashboardStats = useCallback(async () => {
-  setLoading(true);
-  await new Promise((resolve) => setTimeout(resolve, 500));
-  setLoading(false);
+
+  const getDashboardStats = useCallback(async () => {
+    setLoading(true)
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    setLoading(false)
+    return {
+      totalContracts: 0 // لاحقًا تُستبدل بالبيانات الفعلية
+    }
+  }, [])
 
   return {
-    totalContracts: 0, // لاحقًا تُستبدل بالبيانات الفعلية
-  };
-}, []);
+    loading,
+    getSystemStatus,
+    testConnection,
+    initializeTables,
+    addSampleData,
+    fetchAllData,
+    getContracts,
+    getUsers,
+    getPayments,
+    getDashboardStats
+  }
+}
