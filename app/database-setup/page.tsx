@@ -194,7 +194,7 @@ useEffect(() => {
 }, []);
 
 return (
-  <div className="min-h-screen bg-gray-50 p-4">
+ <div className={"min-h-screen bg-gray-50 p-4"}>
     ...
   </div>
       <div className="container mx-auto max-w-6xl space-y-6">
