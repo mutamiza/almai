@@ -1,15 +1,14 @@
 import type React from "react"
 import "./globals.css"
 import { Inter } from "next/font/google"
-const inter = Inter({ subsets: ["latin"] });
 import { Header } from "@/components/header"
-
+import { Sidebar } from "@/components/sidebar" // تأكد من أنك قمت باستيراده
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "نظام إدارة عقود الاستثمار",
   description: "نظام متكامل لإدارة عقود الاستثمار والدفعات",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
