@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -185,11 +186,6 @@ export default function DatabaseSetupPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      {/* ⬅️ ضع كل JSX هنا كما هو موجود لديك (تم إخفاؤه اختصارًا للرد) */}
-    </div>
-  );
-}
-
       <div className="container mx-auto max-w-6xl space-y-6">
         {/* Header */}
         <div className="text-center py-6">
@@ -866,4 +862,7 @@ SHOW GRANTS FOR 'app_user'@'localhost';`}</pre>
       </div>
     </div>
   )
+}
+    </div>
+  );
 }
