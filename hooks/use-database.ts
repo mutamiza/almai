@@ -278,6 +278,6 @@ export function useDatabase() {
   setLoading(false);
 
   return {
-    totalContracts: 0, // استبدل 0 بالقيمة الصحيحة من قاعدة البيانات لاحقًا
+    totalContracts: 0, // ← لاحقًا تُستبدل بالبيانات الفعلية
   };
 }, []);
