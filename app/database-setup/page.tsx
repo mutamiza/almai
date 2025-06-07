@@ -180,15 +180,15 @@ export default function DatabaseSetupPage() {
   }
 
   // استرجاع الإعدادات المحفوظة
-  useEffect(() => {
-     const savedConfig = localStorage.getItem('dbConfig')
+useEffect(() => {
+  const savedConfig = localStorage.getItem('dbConfig');
   if (savedConfig) {
     try {
-      const config = JSON.parse(savedConfig)
-      setDbConfig(config)
-      setConfigSaved(true)
+      const config = JSON.parse(savedConfig);
+      setDbConfig(config);
+      setConfigSaved(true);
     } catch (error) {
-      console.error("فشل استرجاع الإعدادات المحفوظة:", error)
+      console.error("فشل استرجاع الإعدادات المحفوظة:", error);
     }
   }
 }, []);
