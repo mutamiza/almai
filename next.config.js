@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // ← هذا هو التعديل الأساسي
+  output: 'export',
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -8,8 +8,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    unoptimized: true,
+    unoptimized: true, // مهم لتفادي أخطاء الصور في التصدير
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
